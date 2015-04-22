@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="utf-8">
+    <title>后台统计</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+  </head>
+
+  <body>
+
+    <div class="container">
+    <?php
+    	$renshu = 0;
+    	foreach ($this->all as $r){
+			$renshu += $this->escape($r->number_of_attendee);
+		}
+
+	?>
+    <table class="table table-condensed table-striped table-hover">
+	    <thead>
+	    	<tr>
+	    		<th>序号</th>
+	    		<th>名字</th>
+	    		<th>电话</th>
+	    		<th>人数(<?php echo $renshu; ?>)</th>
+	    		<th>订房</th>
+	    		<th>要求</th>
+	    		<th>操作</th>
+	    </thead>
+	    <tbody>
+	    	<?php 
+	    	$i=$this->all->count();
+	    	foreach ($this->all as $r){?>
+	    	<tr>
+	    		<td><?php echo $i;?></td>
+	    		<td><?php echo $this->escape($r->name);?></td>
+	    		<td><?php echo $this->escape($r->phone);?>
+	    			<a href="tel:<?php echo $this->escape($r->phone);?>" class="btn btn-success btn-small"><i class="icon icon-user icon-white"></i> 电他</a>&nbsp;&nbsp;
+	    			<a href="sms:<?php echo $this->escape($r->phone);?>" class="btn btn-warning btn-small"><i class="icon icon-envelope icon-white"></i> 短他</a></td>
+	    		<td><?php echo $this->escape($r->number_of_attendee);?></td>
+	    		<td><?php echo $this->escape($r->room_reserve);?></td>
+	    		<td><?php echo $this->escape($r->room_description);?></td>
+	    		<td><a onclick="return confirm('确定删除<?php echo $this->escape($r->name);?>?');" class="btn btn-small btn-danger" href="/houtai/delete/id/<?php echo $r->id;?>"><i class="icon icon-white icon-remove-sign"></i> 删除</a></td>
+	    	</tr>
+	    	<?php 
+				$i--;
+			}?>
+	    </tbody>
+    
+    
+    
+    </table>
+    
+   </div>
+    
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/javascripts/jquery-1.10.2.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+  </body>
+</html>
+
